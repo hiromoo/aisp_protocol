@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "component": { "type": "string" },
+    "children": { "type": "array" },
+    "state": { "type": "object" },
+    "actions": { "type": "object" },
+    "style": { "type": "object" }
+  },
+  "required": ["component"]
+}

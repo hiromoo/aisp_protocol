@@ -1,0 +1,65 @@
+{
+  "component": "TodoApp",
+  "state": {
+    "newTaskTitle": "",
+    "tasks": []
+  },
+  "actions": {
+    "addTask": {
+      "effect": [
+        {
+          "push": {
+            "to": "tasks",
+            "value": {
+              "title": "$newTaskTitle",
+              "done": false
+            }
+          }
+        },
+        {
+          "set": {
+            "newTaskTitle": ""
+          }
+        }
+      ]
+    },
+    "toggleTask": {
+      "effect": [
+        {
+          "map": {
+            "target": "tasks",
+            "update": {
+              "if": {
+                "eq": [
+                  "$index",
+                  "$action.index"
+                ]
+              },
+              "set": {
+                "done": {
+                  "not": "$item.done"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "style": {
+    "TodoApp": {
+      "padding": "16px",
+      "fontFamily": "sans-serif"
+    },
+    "TextInput": {
+      "border": "1px solid #ccc",
+      "padding": "8px",
+      "width": "100%"
+    },
+    "Button": {
+      "background": "#007bff",
+      "color": "white",
+      "padding": "8px 12px"
+    }
+  }
+}
