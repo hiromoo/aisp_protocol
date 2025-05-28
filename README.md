@@ -60,6 +60,9 @@ ChatGPTや他の大規模言語モデルにAISPを認識させることで、自
 
      > 「AISPというJSON形式の中間言語を使ってアプリを構成したいです。UIは`component`で、状態は`state`、操作は`actions`、副作用は`effect`、スタイルは`style`という構造です。」
 
+   - 詳細はGitHubリポジトリをご覧ください：  
+     👉 https://github.com/hiromoo/aisp_protocol
+
 2. **目的を自然言語で指示**
    - 例：「シンプルなToDoアプリを作って。タスクを追加・完了できるようにして。」
 
@@ -70,22 +73,25 @@ ChatGPTや他の大規模言語モデルにAISPを認識させることで、自
    - `examples/` に保存し、コード生成器やテンプレートと組み合わせてHTML/JSを生成
    - あるいは、別のAIにAISPを渡してコードやUIを出力させる
 
-### 推奨プロンプト例（英語）
+### 推奨プロンプト例（日本語）
 
-```
-Please use the following JSON-based protocol to define a UI:
+以下のJSON形式のプロトコル「AISP」を使ってUIを定義してください：
 
-- "component": UI elements
-- "state": dynamic values
-- "actions": behaviors and logic
-- "effect": changes to state or interaction
-- "style": appearance information
+- "component"：UI要素
+- "state"：状態データ
+- "actions"：操作・ロジック
+- "effect"：状態やUIへの変化
+- "style"：見た目の情報
 
-Generate a ToDo App using this protocol.
-```
+仕様の詳細はこちらを参照してください：  
+👉 https://github.com/hiromoo/aisp_protocol
+
+この形式を使って、ToDoアプリを生成してください。
 
 ### 利用シーン
 
-- AIによるアプリUI自動設計
-- 自然言語インターフェースでの設計作業
-- 他のAI（エージェント）との構造的連携
+このプロトコルは以下のような場面で活用できます：
+
+- AIによるUIやロジックの自動生成
+- 会話形式でのアプリ設計・検証
+- 複数のAI間での意味的な構造の受け渡し

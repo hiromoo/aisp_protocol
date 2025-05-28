@@ -55,9 +55,12 @@ It allows users to describe UI structure, state, behavior, and styles using a JS
 ### How to Use with Chat-Based AI (e.g., ChatGPT)
 
 1. **Introduce the Protocol**
-   Provide the AI with the general structure of AISP:
+   Tell the AI about the general structure of AISP:
 
    > "I'd like to define an application using a JSON-based protocol called AISP. It uses `component`, `state`, `actions`, `effect`, and `style` as its structure."
+
+   For full details, see the GitHub repository:  
+   👉 https://github.com/hiromoo/aisp_protocol
 
 2. **Give Natural Language Instructions**
    Example: "Create a simple ToDo app with task input and completion toggling."
@@ -71,8 +74,7 @@ It allows users to describe UI structure, state, behavior, and styles using a JS
 
 ### Example Prompt (Recommended)
 
-```
-Please use the following JSON-based protocol to define a UI:
+Please use the following JSON-based protocol to define a user interface:
 
 - "component": UI elements
 - "state": dynamic values
@@ -80,11 +82,15 @@ Please use the following JSON-based protocol to define a UI:
 - "effect": changes to state or interaction
 - "style": appearance information
 
-Generate a ToDo App using this protocol.
-```
+Refer to the full protocol specification here:  
+👉 https://github.com/hiromoo/aisp_protocol
+
+Now, using this format, generate a ToDo App.
 
 ### Use Cases
 
-- AI-generated application UI
-- Conversational interface for app design
-- Cross-agent structured protocol communication
+This protocol can be applied in the following scenarios:
+
+- Automatic UI and logic generation by AI
+- Conversational app design and validation
+- Semantic structure exchange between multiple AI agents
