@@ -47,6 +47,8 @@ The protocol is in active development. Planned directions include:
 We welcome feedback and contributions.
 
 
+
+
 ## 🤖 Using AISP with AI Chat Interfaces
 
 AISP is designed as an intermediate language (IL) that enables structured communication between human intentions and AI-driven application generation.  
@@ -72,6 +74,8 @@ It allows users to describe UI structure, state, behavior, and styles using a JS
    - Save it to the `examples/` directory and use it with your code generator
    - Or feed it into another AI agent to render or interpret it
 
+
+
 ### Example Prompt (Recommended)
 
 Please use the following JSON-based protocol to define a user interface:
@@ -87,6 +91,87 @@ Refer to the full protocol specification here:
 
 Now, using this format, generate a ToDo App.
 
+### Prompt Example for Code Generation (AISP → HTML/JS)
+
+Please convert the following AISP JSON definition into HTML and JavaScript.
+
+- "component" should be rendered as HTML elements
+- "state" should be handled as dynamic JS variables
+- "actions" and "effect" should be implemented as event handlers
+- "style" should be applied as CSS
+
+(Refer to the AISP spec → https://github.com/hiromoo/aisp_protocol)
+
+
+
+### Full Prompt Example (Generating a Web App)
+
+Use the following AISP JSON definition to generate a complete web application (HTML, CSS, and JavaScript).
+
+AISP is a JSON-based intermediate language structured as follows:
+
+- "component": UI layout (e.g., div, input, button)
+- "state": state variables (e.g., task list, input value)
+- "actions": event handlers and logic (e.g., add task)
+- "effect": state-dependent updates (e.g., rerender task list)
+- "style": visual appearance (similar to CSS)
+
+Spec: https://github.com/hiromoo/aisp_protocol
+
+AISP definition:
+```json
+{
+  "component": {
+    "tag": "div",
+    "id": "app",
+    "children": [
+      {
+        "tag": "input",
+        "id": "taskInput"
+      },
+      {
+        "tag": "button",
+        "id": "addButton",
+        "text": "Add"
+      },
+      {
+        "tag": "ul",
+        "id": "taskList"
+      }
+    ]
+  },
+  "state": {
+    "tasks": []
+  },
+  "actions": {
+    "addTask": {
+      "on": "click",
+      "target": "addButton",
+      "do": {
+        "push": {
+          "state": "tasks",
+          "value": "taskInput.value"
+        }
+      }
+    }
+  },
+  "effect": {
+    "on": "tasks",
+    "update": "taskList"
+  },
+  "style": {
+    "#app": {
+      "maxWidth": "400px",
+      "margin": "0 auto",
+      "fontFamily": "sans-serif"
+    }
+  }
+}
+```
+
+Use this definition to generate a functional ToDo application.
+
+
 ### Use Cases
 
 This protocol can be applied in the following scenarios:
@@ -94,3 +179,29 @@ This protocol can be applied in the following scenarios:
 - Automatic UI and logic generation by AI
 - Conversational app design and validation
 - Semantic structure exchange between multiple AI agents
+
+## 🛠 How to Generate an App from an AISP Definition
+
+You can use the AISP definition files (e.g., `examples/todo_app.json`) included in this repository to generate HTML/JS apps.
+
+### Step 1: Review the AISP JSON definition
+
+The `examples/` folder contains app structures written in AISP.
+
+```bash
+examples/todo_app.json
+```
+
+### Step 2: Generate code based on the definition
+
+Currently, the `public/` folder contains manually written HTML/CSS/JS based on the AISP definition.
+
+In the future, tools or AI agents could be used to generate apps automatically from AISP.
+
+### Step 3: Run the app
+
+Simply open `public/index.html` in a browser to view the working app.
+
+---
+
+💡 Auto-generation tools from AISP definitions are planned for future versions.
