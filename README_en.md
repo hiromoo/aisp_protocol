@@ -45,3 +45,46 @@ The protocol is in active development. Planned directions include:
 - Application to domain-specific UIs (education, healthcare, business)
 
 We welcome feedback and contributions.
+
+
+## 🤖 Using AISP with AI Chat Interfaces
+
+AISP is designed as an intermediate language (IL) that enables structured communication between human intentions and AI-driven application generation.  
+It allows users to describe UI structure, state, behavior, and styles using a JSON-based semantic format.
+
+### How to Use with Chat-Based AI (e.g., ChatGPT)
+
+1. **Introduce the Protocol**
+   Provide the AI with the general structure of AISP:
+
+   > "I'd like to define an application using a JSON-based protocol called AISP. It uses `component`, `state`, `actions`, `effect`, and `style` as its structure."
+
+2. **Give Natural Language Instructions**
+   Example: "Create a simple ToDo app with task input and completion toggling."
+
+3. **Receive AISP JSON from AI**
+   The AI should return structured JSON using the AISP format.
+
+4. **Use the Output**
+   - Save it to the `examples/` directory and use it with your code generator
+   - Or feed it into another AI agent to render or interpret it
+
+### Example Prompt (Recommended)
+
+```
+Please use the following JSON-based protocol to define a UI:
+
+- "component": UI elements
+- "state": dynamic values
+- "actions": behaviors and logic
+- "effect": changes to state or interaction
+- "style": appearance information
+
+Generate a ToDo App using this protocol.
+```
+
+### Use Cases
+
+- AI-generated application UI
+- Conversational interface for app design
+- Cross-agent structured protocol communication

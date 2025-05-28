@@ -46,3 +46,46 @@ aisp_protocol/
 - ドメイン特化UI（教育・医療・業務アプリ等）への応用
 
 ぜひフィードバックや提案をお寄せください。
+
+
+## 🤖 AIチャットからAISPを活用するには
+
+AISPは、構造化されたアプリ定義をAIとやり取りするための「中間言語（Intermediate Language）」として設計されています。  
+ChatGPTや他の大規模言語モデルにAISPを認識させることで、自然言語からアプリの構造定義を直接生成・編集できます。
+
+### 利用手順
+
+1. **プロトコルの導入**
+   - 以下のようにプロンプトでAIにAISPの概要を伝えます：
+
+     > 「AISPというJSON形式の中間言語を使ってアプリを構成したいです。UIは`component`で、状態は`state`、操作は`actions`、副作用は`effect`、スタイルは`style`という構造です。」
+
+2. **目的を自然言語で指示**
+   - 例：「シンプルなToDoアプリを作って。タスクを追加・完了できるようにして。」
+
+3. **AIからのAISP生成**
+   - AIが `component`, `state`, `actions` などを含むAISP形式のJSONを出力します。
+
+4. **出力の利用**
+   - `examples/` に保存し、コード生成器やテンプレートと組み合わせてHTML/JSを生成
+   - あるいは、別のAIにAISPを渡してコードやUIを出力させる
+
+### 推奨プロンプト例（英語）
+
+```
+Please use the following JSON-based protocol to define a UI:
+
+- "component": UI elements
+- "state": dynamic values
+- "actions": behaviors and logic
+- "effect": changes to state or interaction
+- "style": appearance information
+
+Generate a ToDo App using this protocol.
+```
+
+### 利用シーン
+
+- AIによるアプリUI自動設計
+- 自然言語インターフェースでの設計作業
+- 他のAI（エージェント）との構造的連携
