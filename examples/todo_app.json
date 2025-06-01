@@ -1,0 +1,183 @@
+{
+  "component": {
+    "component": "TodoApp",
+    "children": [
+      {
+        "component": "TextInput",
+        "bind": "newTaskTitle"
+      },
+      {
+        "component": "Button",
+        "onTap": "addTask",
+        "text": "Add"
+      }
+    ]
+  },
+  "state": {
+    "newTaskTitle": "",
+    "tasks": []
+  },
+  "actions": {
+    "addTask": {
+      "effect": [
+        {
+          "push": {
+            "to": "tasks",
+            "value": {
+              "title": "$newTaskTitle",
+              "done": false,
+              "userId": "$userId"
+            }
+          }
+        },
+        {
+          "set": {
+            "newTaskTitle": ""
+          }
+        }
+      ]
+    },
+    "toggleTask": {
+      "effect": [
+        {
+          "map": {
+            "target": "tasks",
+            "update": {
+              "if": {
+                "and": [
+                  {
+                    "eq": [
+                      "$index",
+                      "$action.index"
+                    ]
+                  },
+                  {
+                    "eq": [
+                      "$item.userId",
+                      "$userId"
+                    ]
+                  }
+                ]
+              },
+              "set": {
+                "done": {
+                  "not": "$item.done"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "style": {
+    "TodoApp": {
+      "padding": "16px",
+      "fontFamily": "sans-serif"
+    },
+    "TextInput": {
+      "border": "1px solid #ccc",
+      "padding": "8px",
+      "width": "100%"
+    },
+    "Button": {
+      "background": "#007bff",
+      "color": "white",
+      "padding": "8px 12px"
+    }
+  },
+  "endpoints": [
+    {
+      "path": "/api/todo",
+      "method": "POST",
+      "description": "Add a new ToDo item for the authenticated user",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "id": "string",
+            "title": "string",
+            "userId": "string"
+          }
+        }
+      ],
+      "auth": "jwt",
+      "logic": "Save the ToDo to the DB for the authenticated user and return the result"
+    },
+    {
+      "path": "/api/todo",
+      "method": "GET",
+      "description": "Get ToDo items for the authenticated user",
+      "responses": [
+        {
+          "status": 200,
+          "body": [
+            {
+              "id": "string",
+              "title": "string",
+              "userId": "string"
+            }
+          ]
+        }
+      ],
+      "auth": "jwt",
+      "logic": "Return only ToDos belonging to the authenticated user"
+    },
+    {
+      "path": "/api/todo/:id",
+      "method": "PATCH",
+      "description": "Toggle ToDo completion for the authenticated user",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "id": "string",
+            "title": "string",
+            "done": "boolean",
+            "userId": "string"
+          }
+        }
+      ],
+      "auth": "jwt",
+      "logic": "Toggle the done status for the user's ToDo"
+    }
+  ],
+  "models": [
+    {
+      "name": "Todo",
+      "schema": {
+        "id": "string",
+        "title": "string",
+        "done": "boolean",
+        "userId": "string"
+      },
+      "description": "Data model for a ToDo item, including userId for per-user separation"
+    }
+  ],
+  "auth": {
+    "type": "jwt",
+    "config": {
+      "secret": "..."
+    }
+  },
+  "effect": [
+    {
+      "type": "log",
+      "message": "ToDo API called"
+    }
+  ]
+}

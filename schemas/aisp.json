@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "AISP Unified Schema",
+    "type": "object",
+    "properties": {
+        "component": {
+            "$ref": "frontend.json#/definitions/component"
+        },
+        "state": {
+            "$ref": "frontend.json#/definitions/state"
+        },
+        "actions": {
+            "$ref": "frontend.json#/definitions/actions"
+        },
+        "style": {
+            "$ref": "frontend.json#/definitions/style"
+        },
+        "endpoints": {
+            "$ref": "backend.json#/definitions/endpoints"
+        },
+        "models": {
+            "$ref": "backend.json#/definitions/models"
+        },
+        "auth": {
+            "$ref": "backend.json#/definitions/auth"
+        },
+        "effect": {
+            "$ref": "backend.json#/definitions/effect"
+        }
+    },
+    "required": [
+        "component",
+        "state",
+        "actions",
+        "style",
+        "endpoints",
+        "models",
+        "auth"
+    ],
+    "description": "To support per-user data separation, include a userId field in models and endpoints, and describe per-user logic."
+}

@@ -1,0 +1,89 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "endpoints": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string"
+                    },
+                    "method": {
+                        "type": "string",
+                        "enum": [
+                            "GET",
+                            "POST",
+                            "PUT",
+                            "DELETE",
+                            "PATCH"
+                        ]
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "parameters": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "responses": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "auth": {
+                        "type": "string"
+                    },
+                    "logic": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "path",
+                    "method"
+                ]
+            }
+        },
+        "models": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "schema": {
+                        "type": "object"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "schema"
+                ]
+            }
+        },
+        "auth": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "config": {
+                    "type": "object"
+                }
+            }
+        },
+        "effect": {
+            "type": "array",
+            "items": {
+                "type": "object"
+            }
+        }
+    }
+}

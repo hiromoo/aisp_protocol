@@ -7,26 +7,21 @@ AISP (AI Semantic Protocol) is a JSON-based intermediate language designed to br
 ## Core Elements
 
 ### 1. Component
+
 Defines UI components and their hierarchy.
 
 ```json
 {
   "component": "TodoApp",
   "children": [
-    {
-      "component": "TextInput",
-      "bind": "newTaskTitle"
-    },
-    {
-      "component": "Button",
-      "onTap": "addTask",
-      "text": "Add"
-    }
+    { "component": "TextInput", "bind": "newTaskTitle" },
+    { "component": "Button", "onTap": "addTask", "text": "Add" }
   ]
 }
 ```
 
 ### 2. State
+
 Declares mutable variables used in the application.
 
 ```json
@@ -39,6 +34,7 @@ Declares mutable variables used in the application.
 ```
 
 ### 3. Action
+
 Defines user or system-triggered behaviors.
 
 ```json
@@ -52,9 +48,7 @@ Defines user or system-triggered behaviors.
             "value": { "title": "$newTaskTitle", "done": false }
           }
         },
-        {
-          "set": { "newTaskTitle": "" }
-        }
+        { "set": { "newTaskTitle": "" } }
       ]
     }
   }
@@ -62,18 +56,17 @@ Defines user or system-triggered behaviors.
 ```
 
 ### 4. Effect
+
 Describes side effects such as state updates or logging.
 
 ### 5. Style
+
 Allows styling with semantic tokens or raw CSS references.
 
 ```json
 {
   "style": {
-    "TextInput": {
-      "border": "1px solid #ccc",
-      "padding": "8px"
-    },
+    "TextInput": { "border": "1px solid #ccc", "padding": "8px" },
     "Button": {
       "background": "#007bff",
       "color": "white",
@@ -102,6 +95,141 @@ Allows styling with semantic tokens or raw CSS references.
 - Backend logic representation
 - Multi-agent communication layer
 - Domain-specific UI primitives
+
+## Backend Extension
+
+AISP can describe not only UI but also backend APIs, data models, authentication, and side effects in a semantic and structured way.
+
+### Main Elements
+
+- **endpoints**: API endpoints (path, method, parameters, responses, authentication, logic)
+- **models**: Data models (schema, type, description)
+- **auth**: Authentication/authorization
+- **effect**: External service integration and side effects
+
+### Example
+
+```json
+{
+  "endpoints": [
+    {
+      "path": "/api/todo",
+      "method": "POST",
+      "description": "Add a new ToDo item",
+      "parameters": [{ "name": "title", "type": "string", "required": true }],
+      "responses": [
+        { "status": 200, "body": { "id": "string", "title": "string" } }
+      ],
+      "auth": "jwt",
+      "logic": "Save the ToDo to the DB and return the result"
+    }
+  ],
+  "models": [
+    {
+      "name": "Todo",
+      "schema": { "id": "string", "title": "string", "done": "boolean" },
+      "description": "Data model for a ToDo item"
+    }
+  ],
+  "auth": {
+    "type": "jwt",
+    "config": { "secret": "..." }
+  },
+  "effect": [{ "type": "log", "message": "ToDo API called" }]
+}
+```
+
+### Extension Policy
+
+- Backend elements are also described in AISP's semantic structure, enabling shared understanding and automatic generation by both AI and humans.
+- See `schemas/backend.json` for the detailed schema.
+
+## Unified Schema
+
+AISP allows you to describe both frontend (UI structure, state, actions, style) and backend (API, data models, authentication, side effects) in a single unified JSON file.
+
+### Main Elements
+
+- **component**: UI component hierarchy
+- **state**: Application state variables
+- **actions**: User or system actions
+- **style**: UI style
+- **endpoints**: API endpoints
+- **models**: Data models
+- **auth**: Authentication/authorization
+- **effect**: Side effects and external integration
+
+### Unified Example
+
+```json
+{
+  "component": {
+    "component": "TodoApp",
+    "children": [
+      { "component": "TextInput", "bind": "newTaskTitle" },
+      { "component": "Button", "onTap": "addTask", "text": "Add" }
+    ]
+  },
+  "state": {
+    "newTaskTitle": "",
+    "tasks": []
+  },
+  "actions": {
+    "addTask": {
+      "effect": [
+        {
+          "push": {
+            "to": "tasks",
+            "value": { "title": "$newTaskTitle", "done": false }
+          }
+        },
+        { "set": { "newTaskTitle": "" } }
+      ]
+    }
+  },
+  "style": {
+    "TextInput": { "border": "1px solid #ccc", "padding": "8px" },
+    "Button": {
+      "background": "#007bff",
+      "color": "white",
+      "padding": "8px 12px"
+    }
+  },
+  "endpoints": [
+    {
+      "path": "/api/todo",
+      "method": "POST",
+      "description": "Add a new ToDo item",
+      "parameters": [{ "name": "title", "type": "string", "required": true }],
+      "responses": [
+        { "status": 200, "body": { "id": "string", "title": "string" } }
+      ],
+      "auth": "jwt",
+      "logic": "Save the ToDo to the DB and return the result"
+    }
+  ],
+  "models": [
+    {
+      "name": "Todo",
+      "schema": { "id": "string", "title": "string", "done": "boolean" },
+      "description": "Data model for a ToDo item"
+    }
+  ],
+  "auth": {
+    "type": "jwt",
+    "config": { "secret": "..." }
+  },
+  "effect": [{ "type": "log", "message": "ToDo API called" }]
+}
+```
+
+### Schema Files
+
+- Unified schema: `schemas/aisp.json`
+- Frontend: `schemas/frontend.json`
+- Backend: `schemas/backend.json`
+
+With this unified schema, you can describe and manage the entire semantic structure of your application in a single file.
 
 ---
 

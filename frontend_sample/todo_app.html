@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>AISP ToDo App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!--
+  このファイルはAISP統合スキーマ（UI+API+モデル+認証+副作用）に基づくサンプルWebアプリです。
+  バックエンドAPIやモデル情報はJSON定義（examples/todo_app_with_style.json）を参照してください。
+  -->
+  <div id="app">
+    <h1>ToDo List</h1>
+    <div id="login-area">
+      <input type="text" id="username" placeholder="Username">
+      <button onclick="login()">Login</button>
+    </div>
+    <div id="todo-area" style="display:none;">
+      <input type="text" id="new-task" placeholder="Add a new task">
+      <button onclick="addTask()">Add</button>
+      <ul id="task-list"></ul>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+
+</html>
