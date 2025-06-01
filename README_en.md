@@ -7,42 +7,53 @@ It is designed for both human and AI consumption, supporting code generation, va
 
 - ✅ **Semantic UI Modeling**: Explicitly defines states, actions, effects, and styles
 - 🤖 **AI-Friendly Format**: Designed for easy parsing and interpretation by AI models
-- 🌐 **Language-Agnostic**: Can be mapped to HTML/CSS/JS, and potentially other platforms
+- 🌐 **Language-Agnostic**: Can be mapped to HTML/CSS/JS, React, Flutter, and potentially other platforms
 - 🚀 **Extensible Design**: Allows expansion to backend logic and multi-agent protocols
 
 ## Project Structure
 
 ```
 aisp_protocol/
-├── README.md                # 日本語による概要説明
-├── README_en.md             # 英語による概要説明
-├── LICENSE                  # MITライセンス
-├── README_for_AI.md         # AIエージェント向けメタ説明
+├── README.md                # Japanese overview
+├── README_en.md             # English overview
+├── LICENSE                  # MIT License
+├── README_for_AI.md         # Meta description for AI agents
 ├── docs/
-│   └── specification.md     # プロトコルの正式仕様書
+│   └── specification.md     # Protocol specification
 ├── schemas/
-│   ├── aisp.json            # 統合スキーマ
-│   ├── component.json       # フロントエンド用スキーマ
-│   └── backend.json         # バックエンド用スキーマ
+│   ├── aisp.json            # Unified schema
+│   ├── frontend.json        # Frontend schema
+│   └── backend.json         # Backend schema
 ├── examples/
-│   └── todo_app.json        # AISP形式のサンプル定義
+│   └── todo_app.json        # AISP-format sample definition
 ├── frontend_sample/
-│   ├── todo_app.html        # 静的Webアプリ（AISP定義から生成）
-│   ├── app.js
-│   └── style.css
+│   ├── html/         # Static HTML/CSS/JS sample
+│   │   ├── todo_app.html
+│   │   ├── app.js
+│   │   └── style.css
+│   ├── react/        # React sample
+│   │   ├── TodoApp.jsx
+│   │   └── ...
+│   └── flutter/      # Flutter sample
+│       ├── lib/
+│       │   └── main.dart
+│       ├── pubspec.yaml
+│       └── ...
 └── backend_sample/
-    └── server.js            # AISP定義から生成されたバックエンドサンプル
+    └── server.js            # Backend sample generated from AISP definition
 ```
 
 - `/examples`: Only AISP-format sample JSON definitions
-- `/frontend_sample`: Only static web app (HTML/CSS/JS)
+- `/frontend_sample/html`: Static Web App (HTML/CSS/JS)
+- `/frontend_sample/react`: React sample
+- `/frontend_sample/flutter`: Flutter sample
 - `/backend_sample`: Backend sample generated from AISP definitions
 - `/schemas`: `frontend.json` (frontend schema), `backend.json` (backend schema), `aisp.json` (unified schema)
 
 ## Usage
 
-- Reference the JSON file in `examples/` and feed it to an AI model or a compatible code generator.
-- The contents of `public/` were generated based on AISP definitions and demonstrate a live example.
+- Refer to the JSON files in `examples/` and load them into any AI model or code generator.
+- The HTML/CSS/JS, React, and Flutter code in `frontend_sample/` and the server code in `backend_sample/` are samples created based on AISP definitions.
 
 ## Future Vision
 
@@ -163,7 +174,7 @@ Use this definition to generate a working ToDo app.
 
 ## 🛠 How to Generate an App from an AISP Definition
 
-You can use the AISP definition files (e.g., `examples/todo_app.json`) included in this repository to generate HTML/JS apps.
+You can use the AISP definition files (e.g., `examples/todo_app.json`) included in this repository to generate HTML/JS, React, or Flutter apps, as well as backend APIs.
 
 ### Step 1: Review the AISP JSON definition
 
@@ -175,27 +186,23 @@ examples/todo_app.json
 
 ### Step 2: Generate code based on the definition
 
-Currently, the `public/` folder contains manually written HTML/CSS/JS based on the AISP definition.
+Currently, the samples in `frontend_sample/` (html/, react/, flutter/) and `backend_sample/` are manually created based on the AISP definition.
 
 In the future, tools or AI agents could be used to generate apps automatically from AISP.
 
 ### Step 3: Run the app
 
-Simply open `public/index.html` in a browser to view the working app.
+- Open `frontend_sample/html/todo_app.html` in a browser for the static web app.
+- Run the React or Flutter sample as described in their respective README files.
+- Start the backend server with `node backend_sample/server.js`.
 
 ---
 
 💡 Auto-generation tools from AISP definitions are planned for future versions.
 
-# AISP Protocol (English)
-
-## Overview
-
-AISP (AI Semantic Protocol) is a unified, JSON-based protocol for describing both frontend UI and backend logic in a single file. It is designed for both human and AI consumption, supporting code generation, validation, and transformation.
-
 ## Unified Schema
 
-- Unified schema (`schemas/aisp.json`) references frontend (`schemas/component.json`) and backend (`schemas/backend.json`) schemas using `$ref` and `definitions`.
+- Unified schema (`schemas/aisp.json`) references frontend (`schemas/frontend.json`) and backend (`schemas/backend.json`) schemas using `$ref` and `definitions`.
 - All schemas are compatible with standard JSON Schema tools.
 
 ## Example (Unified)

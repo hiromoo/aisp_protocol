@@ -26,22 +26,34 @@ aisp_protocol/
 ├── examples/
 │   └── todo_app.json        # AISP形式のサンプル定義
 ├── frontend_sample/
-│   ├── todo_app.html        # 静的Webアプリ（AISP定義から生成）
-│   ├── app.js
-│   └── style.css
+│   ├── html/         # 静的HTML/CSS/JSサンプル
+│   │   ├── todo_app.html
+│   │   ├── app.js
+│   │   └── style.css
+│   ├── react/        # React用サンプル
+│   │   ├── TodoApp.jsx
+│   │   └── ...
+│   └── flutter/      # Flutter用サンプル
+│       ├── lib/
+│       │   └── main.dart
+│       ├── pubspec.yaml
+│       └── ...
 └── backend_sample/
     └── server.js            # AISP定義から生成されたバックエンドサンプル
 ```
 
 - `/examples`：AISP 形式のサンプル JSON 定義のみ
-- `/frontend_sample`：静的 Web アプリ（HTML/CSS/JS）のみ
+- `/frontend_sample/html`：静的 Web アプリ（HTML/CSS/JS）のみ
+- `/frontend_sample/react`：React 用サンプル
+- `/frontend_sample/flutter`：Flutter 用サンプル
 - `/backend_sample`：AISP 定義から生成されたバックエンド等の参考実装
 - `/schemas`：`frontend.json`（フロントエンドスキーマ）、`backend.json`（バックエンドスキーマ）、`aisp.json`（統合スキーマ）
 
 ## 使い方
 
 - `examples/` にある JSON ファイルを参照し、任意の AI モデルやコードジェネレータに読み込ませてください
-- `frontend_sample/`・`backend_sample/` ディレクトリの HTML/CSS/JS・サーバコードは AISP 定義をもとに作成されたサンプルです
+- `frontend_sample/` ディレクトリには、静的 Web アプリ（html/）、React（react/）、Flutter（flutter/）の各種フロントエンドサンプルが含まれています
+- `backend_sample/` ディレクトリには AISP 定義をもとに作成されたサーバコードのサンプルが含まれています
 
 ## 今後の展望
 
@@ -294,3 +306,163 @@ AISP 定義（このプロトコル）のみから「一発で完全に動作す
 - 今後 AI の推論・自動修正・実装力が発展すれば、AISP 定義だけで完全なアプリを一発生成できる可能性があります。
 
 現時点では、AISP 定義をもとに人間または AI が実装・セットアップを補助する運用が現実的です。
+
+## React アプリ生成例
+
+AISP は React アプリの UI・ロジック自動生成にも活用できます。以下は AISP 定義から React（JSX/JavaScript）コードを生成するためのプロンプト例です。
+
+### コード生成用プロンプト例（AISP → React/JSX）
+
+以下の AISP 形式の JSON 定義をもとに、React の関数コンポーネントと useState による状態管理を実装してください。
+
+- "component"は React の JSX 要素として再現してください
+- "state"は useState 等で管理してください
+- "actions"や"effect"はイベントハンドラや useEffect で表現してください
+- "style"は可能な範囲で style 属性や CSS で反映してください
+
+（AISP の仕様はこちら → https://github.com/hiromoo/aisp_protocol）
+
+#### AISP 定義例：
+
+```json
+{
+  "component": {
+    "component": "div",
+    "children": [
+      { "component": "input", "id": "taskInput" },
+      { "component": "button", "id": "addButton", "text": "追加" },
+      { "component": "ul", "id": "taskList" }
+    ]
+  },
+  "state": { "tasks": [] },
+  "actions": {
+    "addTask": {
+      "on": "click",
+      "target": "addButton",
+      "do": {
+        "push": { "state": "tasks", "value": "taskInput.value" }
+      }
+    }
+  },
+  "effect": { "on": "tasks", "update": "taskList" }
+}
+```
+
+#### React コード例：
+
+```jsx
+import React, { useState, useRef } from "react";
+
+function TodoApp() {
+  const [tasks, setTasks] = useState([]);
+  const inputRef = useRef();
+
+  const addTask = () => {
+    const value = inputRef.current.value;
+    if (value) {
+      setTasks([...tasks, value]);
+      inputRef.current.value = "";
+    }
+  };
+
+  return (
+    <div style={{ maxWidth: 400, margin: "0 auto", fontFamily: "sans-serif" }}>
+      <input ref={inputRef} />
+      <button onClick={addTask}>追加</button>
+      <ul>
+        {tasks.map((task, i) => (
+          <li key={i}>{task}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default TodoApp;
+```
+
+このように AISP 定義をもとに、React アプリの JSX 構造や状態管理を自動生成できます。
+
+## Flutter アプリ生成例
+
+AISP は Flutter アプリの UI・ロジック自動生成にも活用できます。以下は AISP 定義から Flutter（Dart）コードを生成するためのプロンプト例です。
+
+### コード生成用プロンプト例（AISP → Flutter/Dart）
+
+以下の AISP 形式の JSON 定義をもとに、Flutter（Dart）の Widget ツリーと状態管理を実装してください。
+
+- "component"は Flutter の Widget として再現してください
+- "state"は Dart の変数や StatefulWidget の状態として管理してください
+- "actions"や"effect"はイベントハンドラや setState で表現してください
+- "style"は可能な範囲で Widget のプロパティや Theme で反映してください
+
+（AISP の仕様はこちら → https://github.com/hiromoo/aisp_protocol）
+
+#### AISP 定義例：
+
+```json
+{
+  "component": {
+    "component": "Column",
+    "children": [
+      { "component": "TextField", "id": "taskInput" },
+      { "component": "ElevatedButton", "id": "addButton", "text": "追加" },
+      { "component": "ListView", "id": "taskList" }
+    ]
+  },
+  "state": { "tasks": [] },
+  "actions": {
+    "addTask": {
+      "on": "tap",
+      "target": "addButton",
+      "do": {
+        "push": { "state": "tasks", "value": "taskInput.value" }
+      }
+    }
+  },
+  "effect": { "on": "tasks", "update": "taskList" }
+}
+```
+
+#### Flutter コード例：
+
+```dart
+class TodoApp extends StatefulWidget {
+  @override
+  _TodoAppState createState() => _TodoAppState();
+}
+
+class _TodoAppState extends State<TodoApp> {
+  final TextEditingController _controller = TextEditingController();
+  List<String> tasks = [];
+
+  void _addTask() {
+    if (_controller.text.isNotEmpty) {
+      setState(() {
+        tasks.add(_controller.text);
+        _controller.clear();
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextField(controller: _controller),
+        ElevatedButton(onPressed: _addTask, child: Text('追加')),
+        Expanded(
+          child: ListView.builder(
+            itemCount: tasks.length,
+            itemBuilder: (context, index) => ListTile(
+              title: Text(tasks[index]),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+```
+
+このように AISP 定義をもとに、Flutter アプリの Widget ツリーや状態管理を自動生成できます。
